@@ -104,6 +104,11 @@ _Good luck, Agent_.
 
 
 ### How to Run the Environment
+
+- Clone the repository for your computer
+
+- Save the repo in your onwn repo
+
 - Install dependencies
 > npm install
 
@@ -116,6 +121,19 @@ _Good luck, Agent_.
 - Run specific test
 > npm test <name_of_test>
 
+---
+
+### Submission
+
+- Ensure you have the work saved in your own repository
+
+- Ensure you have push all the changes to the your repo
+
+- Ensure that repo is public
+
+- In Canvas, save the link to clone your repo (e.g.: https://github.com/GMU-CYSE/ASS1-SUMMER26.git)
+
+- After you submit, you cannot make any change (GitHub will track it). If you make changes after the submission, you assignment will receive zero.
 
 
 ---
@@ -142,3 +160,5 @@ _Good luck, Agent_.
 | **Syntax errors that completely obstruct the `npm test` execution environment** | **-20 Points** | Disables automated test suites, blocking the local simulation pipeline and autograder framework checks entirely. |
 
 ---
+
+
