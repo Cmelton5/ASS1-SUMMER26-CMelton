@@ -135,6 +135,11 @@ _Good luck, Agent_.
 
 - After you submit, you cannot make any change (GitHub will track it). If you make changes after the submission, you assignment will receive zero.
 
+---
+
+### Support
+
+- JavaScript Tutorial: https://www.w3schools.com/jS/
 
 ---
 
