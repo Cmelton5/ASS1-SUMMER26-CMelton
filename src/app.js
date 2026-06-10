@@ -25,10 +25,14 @@ const STORAGE_KEY = "ssp_session_v1";
  * - use regex, not DOM APIs
  */
 function sanitizeUsername(input) {
-  // TODO: implement
-  return "";
+  let username = input
+    .replace(/[^A-Za-z0-9_-]/g, "_") // removes all non-allowed characters and replaces with underscore
+    .slice(0, 20) // slices it down to 20 characters to meet the limit length
 
-  
+  if (username.length == 0) { //I just made this simple catch incase they put like #@$!$ as their input
+    username = "Empty"
+  }
+  return username;  
 }
 
 /**
