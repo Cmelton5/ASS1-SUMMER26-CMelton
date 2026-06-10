@@ -32,7 +32,7 @@ function sanitizeUsername(input) {
   if (username.length == 0) { //I just made this simple catch incase they put like #@$!$ as their input
     username = "Empty"
   }
-  return username;  
+  return username;
 }
 
 /**
@@ -44,7 +44,13 @@ function sanitizeUsername(input) {
  * - MUST use textContent (not innerHTML)
  */
 function renderNotifications(listEl, notifications) {
-  // TODO: implement
+  listEl.textContent = ''; // clear existing items
+  notifications.forEach(notification => {
+      const li = document.createElement('li');
+      li.textContent = notification;
+      listEl.appendChild(li);
+  });
+
 }
 
 /** -----------------------------
@@ -66,8 +72,21 @@ function renderNotifications(listEl, notifications) {
  *   - notifications: array of strings
  */
 function parseProfileJson(jsonText) {
-  // TODO: implement
-  return null;
+  try {
+profile = JSON.parse(jsonText);
+  } catch { //Honestly I thought trycatch would be the easiest way to handle the valid JSON
+    return null;
+  }
+  if (typeof profile.displayName !== 'string') {
+    return null; //start of my long if chain, but hey it works, this catches the display name
+  }
+  if (typeof profile.role !== 'string' || !['user', 'admin'].includes(profile.role)){
+    return null; //same as above but for the role
+  }
+  if (!Array.isArray(profile.notifications) || !profile.notifications.every(n => typeof n === 'string')) {
+    return null; //this does it for notifications, part of this was suggested by vscode correction and it worked so I left it.
+  }
+  return profile;
 }
 
 /** -----------------------------
@@ -84,8 +103,14 @@ function parseProfileJson(jsonText) {
  * - Return parsed profile object or null
  */
 async function fetchUserProfile(url) {
-  // TODO: implement
-  return null;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        return null;
+    }
+
+    const jsonText = await response.text();
+    return parseProfileJson(jsonText);
 }
 
 /** -----------------------------
@@ -103,7 +128,14 @@ async function fetchUserProfile(url) {
  * - Must NOT store notifications (assume those are dynamic)
  */
 function saveSessionToStorage(profile) {
-  // TODO: implement
+  const sessionData = {
+    displayName: profile.displayName,
+    role: profile.role
+  };
+  localStorage.setItem(
+    'session',
+    JSON.stringify(sessionData)
+  );
 }
 
 /**
@@ -132,8 +164,11 @@ function loadSessionFromStorage() {
  * client-side logic can be manipulated; real authorization is server-side.
  */
 function computeAccessStatus(profile) {
-  // TODO: implement
+  if (profile && profile.role === "admin") {
+    return "GRANTED";
+  } else {
   return "DENIED";
+  }
 }
 
 /** -----------------------------
