@@ -103,14 +103,14 @@ profile = JSON.parse(jsonText);
  * - Return parsed profile object or null
  */
 async function fetchUserProfile(url) {
+  try {
     const response = await fetch(url);
-
-    if (!response.ok) {
-        return null;
-    }
-
+    if (!response.ok) return null;
     const jsonText = await response.text();
     return parseProfileJson(jsonText);
+  } catch {
+    return null;
+  }
 }
 
 /** -----------------------------
@@ -148,7 +148,9 @@ function loadSessionFromStorage() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return null;
+
     const data = JSON.parse(stored);
+
     if (
       typeof data !== "object" ||
       data === null ||
@@ -157,6 +159,7 @@ function loadSessionFromStorage() {
     ) {
       return null;
     }
+
     return {
       displayName: data.displayName,
       role: data.role
