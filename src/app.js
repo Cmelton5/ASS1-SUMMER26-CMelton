@@ -145,8 +145,25 @@ function saveSessionToStorage(profile) {
  * - Return object { displayName, role } if valid
  */
 function loadSessionFromStorage() {
-  // TODO: implement
-  return null;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return null;
+    const data = JSON.parse(stored);
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      typeof data.displayName !== "string" ||
+      typeof data.role !== "string"
+    ) {
+      return null;
+    }
+    return {
+      displayName: data.displayName,
+      role: data.role
+    };
+  } catch {
+    return null;
+  }
 }
 
 /** -----------------------------
